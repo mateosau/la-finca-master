@@ -41,6 +41,7 @@ const controlUsuario = () => {  // function controUsuario (){}
         logueado = true;
     }
 
+    /*
     if (logueado) {
         navLogin.setAttribute('href', '#');
         navLogin.innerHTML = 'Cerrar sesion';
@@ -55,6 +56,7 @@ const controlUsuario = () => {  // function controUsuario (){}
         navLogin.innerHTML = 'Iniciar sesion';
         btnNuevo.style.display = 'none';
     }
+    */
 }
 
 
@@ -71,7 +73,7 @@ async function mostrarArticulos() {
     for (let articulo of articulos) {
         if (logueado) {
             listado.innerHTML += `
-            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+            <div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s">
             <div class="property-item rounded overflow-hidden">
                 <div class="position-relative overflow-hidden">
                     <a href="z-casa-mega.html"><img class="img-fluid imagen" src="img/${articulo.imagen ?? 'nodisponible.png'}" alt=""></a>
@@ -85,15 +87,19 @@ async function mostrarArticulos() {
                 </div>
                 <div class="d-flex border-top">
                     <small class="flex-fill text-center border-end py-2 metros"><i class="fa fa-ruler-combined text-primary me-2 metros"></i>${articulo.metros}</small>
-                    <small class="flex-fill text-center border-end py-2 habitaciones"><i class="fa fa-bed text-primary me-2 habitaciones"></i>${articulos.habitaciones}</small>
-                    <small class="flex-fill text-center py-2 banios"><i class="fa fa-bath text-primary me-2 banios"></i>${articulos.banios}</small>
+                    <small class="flex-fill text-center border-end py-2 habitaciones"><i class="fa fa-bed text-primary me-2 habitaciones"></i>${articulo.habitaciones}</small>
+                    <small class="flex-fill text-center py-2 banios"><i class="fa fa-bath text-primary me-2 banios"></i>${articulo.banios}</small>
                 </div>
+                <div class"card-footer d-flex justify-content-center">
+                    <a class="btnEditar btn btn-primary">Editar</a>
+                    <a class="btnBorrar btn btn-danger">Eliminar</a>
+                    </div>
             </div>
         </div>
             `;
 
         } else {
-            listado.innerHTML += `        <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+            listado.innerHTML += `<div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s">
             <div class="property-item rounded overflow-hidden">
                 <div class="position-relative overflow-hidden">
                     <a href="z-casa-mega.html"><img class="img-fluid imagen" src="img/${articulo.imagen ?? 'nodisponible.png'}" alt=""></a>
@@ -107,8 +113,8 @@ async function mostrarArticulos() {
                 </div>
                 <div class="d-flex border-top">
                     <small class="flex-fill text-center border-end py-2 metros"><i class="fa fa-ruler-combined text-primary me-2 metros"></i>${articulo.metros}</small>
-                    <small class="flex-fill text-center border-end py-2 habitaciones"><i class="fa fa-bed text-primary me-2 habitaciones"></i>${articulos.habitaciones}</small>
-                    <small class="flex-fill text-center py-2 banios"><i class="fa fa-bath text-primary me-2 banios"></i>${articulos.banios}</small>
+                    <small class="flex-fill text-center border-end py-2 habitaciones"><i class="fa fa-bed text-primary me-2 habitaciones"></i>${articulo.habitaciones}</small>
+                    <small class="flex-fill text-center py-2 banios"><i class="fa fa-bath text-primary me-2 banios"></i>${articulo.banios}</small>
                 </div>
             </div>
         </div>`;
