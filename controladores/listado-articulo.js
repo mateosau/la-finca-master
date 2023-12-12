@@ -1,6 +1,6 @@
 import { obtenerarticulos } from '../modelos/articulos';
 
-const url = './api/datos.php?tabla=articulos';
+const url = './api/datos.php?tabla=casas';
 
 // alerta
 const alerta = document.querySelector('#alerta');
@@ -71,7 +71,7 @@ async function mostrarArticulos() {
     const listado = document.querySelector("#listado"); // = getElementById("listado")
     listado.innerHTML = '';
     for (let articulo of articulos) {
-        if (logueado) {
+        if (!logueado) {
             listado.innerHTML += `
             <div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s">
             <div class="property-item rounded overflow-hidden">
@@ -81,19 +81,21 @@ async function mostrarArticulos() {
                     <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Apartamento</div>
                 </div>
                 <div class="p-4 pb-0">
-                    <h5 class="text-primary mb-3 precio">${articulo.precio}</h5>                                
-                    <a class="d-block h5 mb-2 nombre" href="">${articulo.nombre}</a>
-                    <p><i class="fa fa-map-marker-alt text-primary me-2 ubicacion"></i>${articulo.ubicacion}</p>
+                    <h5 class="text-primary mb-3"><span name="spanprecio">${articulo.precio}</span></h5>                                
+                    <a class="d-block h5 mb-2" href=""><span name="spannombre">${articulo.nombre}</span></a>
+                    <p><i class="fa fa-map-marker-alt text-primary me-2"></i><span name="spanubicacion">${articulo.ubicacion}</span></p>
                 </div>
                 <div class="d-flex border-top">
-                    <small class="flex-fill text-center border-end py-2 metros"><i class="fa fa-ruler-combined text-primary me-2 metros"></i>${articulo.metros}</small>
-                    <small class="flex-fill text-center border-end py-2 habitaciones"><i class="fa fa-bed text-primary me-2 habitaciones"></i>${articulo.habitaciones}</small>
-                    <small class="flex-fill text-center py-2 banios"><i class="fa fa-bath text-primary me-2 banios"></i>${articulo.banios}</small>
+                    <small class="flex-fill text-center border-end py-2"><i class="fa fa-ruler-combined text-primary me-2"></i><span name="spanmetros">${articulo.metros}</span></small>
+                    <small class="flex-fill text-center border-end py-2"><i class="fa fa-bed text-primary me-2"></i><span name="spanhabitaciones">${articulo.habitaciones}</span></small>
+                    <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i><span name="spanbanios">${articulo.banios}</span></small>
                 </div>
                 <div class"card-footer d-flex justify-content-center">
+                    <input type="hidden" class="idArticulo" value="${articulo.id}">
+                    <input type="hidden" class="imagenArticulo" value="${articulo.imagen ?? 'nodisponible.png'}">
                     <a class="btnEditar btn btn-primary">Editar</a>
                     <a class="btnBorrar btn btn-danger">Eliminar</a>
-                    </div>
+                </div>
             </div>
         </div>
             `;
@@ -107,14 +109,14 @@ async function mostrarArticulos() {
                     <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Apartamento</div>
                 </div>
                 <div class="p-4 pb-0">
-                    <h5 class="text-primary mb-3 precio">${articulo.precio}</h5>                                
-                    <a class="d-block h5 mb-2 nombre" href="">${articulo.nombre}</a>
-                    <p><i class="fa fa-map-marker-alt text-primary me-2 ubicacion"></i>${articulo.ubicacion}</p>
+                    <h5 class="text-primary mb-3"><span name="spanprecio">${articulo.precio}</span></h5>                                
+                    <a class="d-block h5 mb-2" href=""><span name="spannombre">${articulo.nombre}</span></a>
+                    <p><i class="fa fa-map-marker-alt text-primary me-2"></i><span name="spanubicacion">${articulo.ubicacion}</span></p>
                 </div>
                 <div class="d-flex border-top">
-                    <small class="flex-fill text-center border-end py-2 metros"><i class="fa fa-ruler-combined text-primary me-2 metros"></i>${articulo.metros}</small>
-                    <small class="flex-fill text-center border-end py-2 habitaciones"><i class="fa fa-bed text-primary me-2 habitaciones"></i>${articulo.habitaciones}</small>
-                    <small class="flex-fill text-center py-2 banios"><i class="fa fa-bath text-primary me-2 banios"></i>${articulo.banios}</small>
+                    <small class="flex-fill text-center border-end py-2"><i class="fa fa-ruler-combined text-primary me-2"></i><span name="spanmetros">${articulo.metros}</span></small>
+                    <small class="flex-fill text-center border-end py-2"><i class="fa fa-bed text-primary me-2"></i><span name="spanhabitaciones">${articulo.habitaciones}</span></small>
+                    <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i><span name="spanbanios">${articulo.banios}</span></small>
                 </div>
             </div>
         </div>`;
@@ -123,14 +125,15 @@ async function mostrarArticulos() {
 }
 
 /**
- * Ejecutamos el evento sumit al formulario
+ * Ejecutamos el evento submit al formulario
  */
-formulario.addEventListener('submit', function (e) {
+formulario.addEventListener('submit', (e) => {
+    console.log(accion);
     e.preventDefault();      // Prevenimos la accion por defecto
     const datos = new FormData(formulario);  // Guardamos los datos del formulario
     switch (accion) {
         case "insertar":
-            fetch(url + '&accion=insertar', {
+            fetch(`${url}&accion=insertar`, {
                 method: 'POST',
                 body: datos
             })
@@ -159,7 +162,6 @@ formulario.addEventListener('submit', function (e) {
  */
 btnNuevo.addEventListener('click', () => {
     //limpiamos los inputs
-    ;
     inputUbicacion.value = null;
     inputNombre.value = null;
     inputMetros.value = null;
@@ -170,10 +172,11 @@ btnNuevo.addEventListener('click', () => {
     frmImagen.src = './img/nodisponible.png';
 
     //mostramos el formulario
-    formularioModal.show()
+    formularioModal.show();
 
-    accion = 'insertar'
+    accion = 'insertar';
 })
+
 /**
  * Define el mensaje de alerta
  * @param mensaje el mensaje a mostrar
@@ -192,10 +195,10 @@ const insertarAlerta = (mensaje, tipo) => {
 
 /**
  * determina en que elemento se realiza un evento
- * @parametos elemento el elemento al que se realiza el evento
- * @parametro evento el evento realizado
- * @parametro selector el selector seleccionado
- * @parametro manejador metodo que ejecutamos el evento 
+ * @param elemento el elemento al que se realiza el evento
+ * @param evento el evento realizado
+ * @param selector el selector seleccionado
+ * @param manejador metodo que ejecutamos el evento 
  */
 const on = (elemento, evento, selector, manejador) => {
     elemento.addEventListener(evento, e => {
@@ -212,10 +215,12 @@ on(document, 'click', '.btnEditar', e => {
     const cardFooter = e.target.parentNode; // Elemento padre del boton
     // Obtener los datos del articulo seleccionado
     id = cardFooter.querySelector('.idArticulo').value;
-    const codigo = cardFooter.parentNode.querySelector('span[name=spancodigo]').innerHTML;
+    const ubicacion = cardFooter.parentNode.querySelector('span[name=spanubicacion]').innerHTML;
     const nombre = cardFooter.parentNode.querySelector('span[name=spannombre]').innerHTML;
+    const metros = cardFooter.parentNode.querySelector('span[name=spanmetros]').innerHTML;
     const precio = cardFooter.parentNode.querySelector('span[name=spanprecio]').innerHTML;
-    const descripcion = cardFooter.parentNode.querySelector('.card-text').innerHTML;
+    const habitaciones = cardFooter.parentNode.querySelector('span[name=spanhabitaciones]').innerHTML;
+    const banios = cardFooter.parentNode.querySelector('span[name=spanbanios]').innerHTML;
     const imagen = cardFooter.parentNode.querySelector('.imagenArticulo').value;
 
     //asignamos los valores a los input
@@ -225,8 +230,8 @@ on(document, 'click', '.btnEditar', e => {
     inputPrecio.value = precio;
     inputHabitaciones.value = habitaciones;
     inputBanios.value = banios;
-    inputImagen.value = imagen;
-    frmImagen.src = `./img${imagen}`;
+    //inputImagen.value = imagen;
+    frmImagen.src = `./img/${imagen}`;
 
     //mostramos el formulario
     formularioModal.show();
