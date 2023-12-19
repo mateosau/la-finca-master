@@ -148,11 +148,11 @@ class ModeloABM extends Modelo{
      */
     public function actualizar($valores) {
         // UPDATE articulos SET campo='valor', campo='valor'... WHERE id=1
-        $sql = "UPDATE $this ->tabla SET ";
+        $sql = "UPDATE $this->tabla SET ";
         // recorrer el objeto $valores
         foreach($valores as $key => $value) {
             // Agregamos al sql los campos y valores
-            $sql .= $key. "=".$value."',";
+            $sql .= $key. "='".$value."',";
         }
         $sql = substr($sql,0,strlen($sql)-1); // Quitamos el último caracter(,) a $sql
         // agregamos el criterio

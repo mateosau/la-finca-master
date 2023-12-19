@@ -13,6 +13,8 @@ const navLogin = document.querySelector('#nav-login')
 const formulario = document.querySelector('#formulario');
 const formularioModal = new bootstrap.Modal(document.querySelector("#formularioModal"));
 const btnNuevo = document.querySelector('#btnNuevo');
+const btnGuardar = document.querySelector('#btnGuardar');
+
 
 // Input
 const inputUbicacion = document.querySelector('#ubicacion');
@@ -74,30 +76,30 @@ async function mostrarArticulos() {
         if (!logueado) {
             listado.innerHTML += `
             <div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.1s">
-            <div class="property-item rounded overflow-hidden">
-                <div class="position-relative overflow-hidden">
-                    <a href="z-casa-mega.html"><img class="img-fluid imagen" src="img/${articulo.imagen ?? 'nodisponible.png'}" alt=""></a>
-                    <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">En Venta</div>
-                    <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Apartamento</div>
-                </div>
-                <div class="p-4 pb-0">
-                    <h5 class="text-primary mb-3"><span name="spanprecio">${articulo.precio}</span></h5>                                
-                    <a class="d-block h5 mb-2" href=""><span name="spannombre">${articulo.nombre}</span></a>
-                    <p><i class="fa fa-map-marker-alt text-primary me-2"></i><span name="spanubicacion">${articulo.ubicacion}</span></p>
-                </div>
-                <div class="d-flex border-top">
-                    <small class="flex-fill text-center border-end py-2"><i class="fa fa-ruler-combined text-primary me-2"></i><span name="spanmetros">${articulo.metros}</span></small>
-                    <small class="flex-fill text-center border-end py-2"><i class="fa fa-bed text-primary me-2"></i><span name="spanhabitaciones">${articulo.habitaciones}</span></small>
-                    <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i><span name="spanbanios">${articulo.banios}</span></small>
-                </div>
-                <div class"card-footer d-flex justify-content-center">
-                    <input type="hidden" class="idArticulo" value="${articulo.id}">
-                    <input type="hidden" class="imagenArticulo" value="${articulo.imagen ?? 'nodisponible.png'}">
-                    <a class="btnEditar btn btn-primary">Editar</a>
-                    <a class="btnBorrar btn btn-danger">Eliminar</a>
+                <div class="property-item rounded overflow-hidden">
+                    <div class="position-relative overflow-hidden">
+                        <a href="z-casa-mega.html"><img class="img-fluid imagen" src="img/${articulo.imagen ?? 'nodisponible.png'}" alt=""></a>
+                        <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">En Venta</div>
+                        <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Apartamento</div>
+                    </div>
+                    <div class="p-4 pb-0">
+                        <h5 class="text-primary mb-3"><span name="spanprecio">${articulo.precio}</span></h5>                                
+                        <a class="d-block h5 mb-2" href=""><span name="spannombre">${articulo.nombre}</span></a>
+                        <p><i class="fa fa-map-marker-alt text-primary me-2"></i><span name="spanubicacion">${articulo.ubicacion}</span></p>
+                    </div>
+                    <div class="d-flex border-top">
+                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-ruler-combined text-primary me-2"></i><span name="spanmetros">${articulo.metros}</span></small>
+                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-bed text-primary me-2"></i><span name="spanhabitaciones">${articulo.habitaciones}</span></small>
+                        <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i><span name="spanbanios">${articulo.banios}</span></small>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <input type="hidden" class="idArticulo" value="${articulo.id}">
+                        <input type="hidden" class="imagenArticulo" value="${articulo.imagen ?? 'nodisponible.png'}">
+                        <a class="btnEditar btn btn-primary">Editar</a>
+                        <a class="btnBorrar btn btn-danger">Eliminar</a>
+                    </div>
                 </div>
             </div>
-        </div>
             `;
 
         } else {
@@ -127,7 +129,7 @@ async function mostrarArticulos() {
 /**
  * Ejecutamos el evento submit al formulario
  */
-formulario.addEventListener('submit', (e) => {
+btnGuardar.addEventListener('click', (e) => {
     console.log(accion);
     e.preventDefault();      // Prevenimos la accion por defecto
     const datos = new FormData(formulario);  // Guardamos los datos del formulario
